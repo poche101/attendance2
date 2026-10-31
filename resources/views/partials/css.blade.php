@@ -981,19 +981,19 @@
         margin-top: 20px !important
     }
 
-    /* Register form (class="register" on the <form>): 580px wide */
+    /* Register form (class="register" on the <form>): 680px wide */
     .panel .form:has(form.register) {
-        max-width: 580px !important;
+        max-width: 680px !important;
         width: 100% !important
     }
 
     form.register:has(>.fgrid) {
         border-radius: 20px !important;
-        padding: 38px 40px 40px !important
+        padding: 48px 52px 50px !important
     }
 
     .panel .form:has(form.register) h2 {
-        font-size: 32px !important
+        font-size: 36px !important
     }
 
     .panel .form:has(form.register)>p {
@@ -1010,27 +1010,27 @@
     }
 
     form.register label {
-        margin: 18px 0 7px !important;
-        font-size: 14px !important
+        margin: 22px 0 8px !important;
+        font-size: 15.5px !important
     }
 
     form.register .fgrid input,
     form.register .fgrid select,
     form.register input[type=number] {
-        padding: 15px 16px !important;
-        font-size: 15.5px !important;
-        border-radius: 12px !important
+        padding: 18px 18px !important;
+        font-size: 17px !important;
+        border-radius: 13px !important
     }
 
     form.register .fgrid .two {
-        gap: 0 16px !important
+        gap: 0 20px !important
     }
 
     form.register .btn {
-        margin-top: 26px !important;
-        padding: 16px 20px !important;
-        font-size: 16px !important;
-        border-radius: 12px !important
+        margin-top: 32px !important;
+        padding: 19px 22px !important;
+        font-size: 17.5px !important;
+        border-radius: 13px !important
     }
 
     .panel .form:has(form.register) .link {

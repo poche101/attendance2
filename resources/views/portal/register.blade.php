@@ -2,7 +2,7 @@
 @section('c')
 <h2>Create your account</h2>
 <p class="mut">It takes less than a minute.</p>
-<form method="post" action="{{ route('portal.register.store') }}">@csrf
+<form class="register" method="post" action="{{ route('portal.register.store') }}">@csrf
     <div class="fgrid">
         <div class="sec">Personal details</div>
         <label>Full name</label>
@@ -15,14 +15,14 @@
         <div class="sec" style="margin-top:14px">Church details</div>
         <div id="tog" style="display:flex;gap:6px;background:#eef0fb;padding:4px;border-radius:12px;margin-bottom:12px">
             @foreach($sections as $key => $sec)
-                <label style="flex:1;margin:0;cursor:pointer">
+                <label style="flex:1;margin:0 !important;cursor:pointer">
                     <input type="radio" name="section" value="{{ $key }}" style="display:none" @checked(old('section', 'ajah') == $key) required>
                     <span class="tg">{{ $sec['label'] }}</span>
                 </label>
             @endforeach
         </div>
         <style>
-            #tog .tg{display:block;text-align:center;padding:10px 6px;border-radius:9px;font-weight:600;font-size:14px;color:#555}
+            #tog .tg{display:block;text-align:center;padding:14px 8px;border-radius:10px;font-weight:600;font-size:15.5px;color:#555}
             #tog input:checked+.tg{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}
         </style>
         <div id="dyn"></div>
