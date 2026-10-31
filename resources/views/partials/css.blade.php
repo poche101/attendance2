@@ -1614,4 +1614,7 @@
             font-size: 21px
         }
     }
+
+    .hero h1{white-space:pre-line;font-size:34px;max-width:520px}
+@media(max-width:560px){.hero h1{font-size:22px}}
 </style>
