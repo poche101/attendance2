@@ -13,7 +13,7 @@
             <div>
                 <h1>@yield('h', 'Christ Embassy')</h1>
                 <p>@yield('sub', 'Every soul counts. Mark your attendance in seconds and let us celebrate you.')</p>
-            </div><small>Sunday Service Attendance · christembassylekki.org</small>
+            </div><small>Sunday Service Attendance · celz5.org</small>
         </section>
         <section class="panel">
             <div class="form">

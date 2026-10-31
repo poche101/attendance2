@@ -1041,4 +1041,66 @@
             animation: none
         }
     }
+
+    /* Register form (needs class="register" on the <form>): 560px wide, taller */
+    .panel .form:has(form.register) {
+        max-width: 560px
+    }
+
+    form.register:has(>.fgrid) {
+        border-radius: 18px;
+        padding: 36px 34px 40px
+    }
+
+    .panel .form:has(form.register) h2 {
+        font-size: 28px
+    }
+
+    .panel .form:has(form.register)>p {
+        font-size: 14px;
+        margin: 4px 0 18px
+    }
+
+    form.register .fgrid .sec {
+        font-size: 11px
+    }
+
+    form.register .fgrid .sec[style] {
+        margin-top: 22px !important
+    }
+
+    form.register label {
+        margin: 16px 0 6px;
+        font-size: 13px
+    }
+
+    form.register .fgrid input,
+    form.register .fgrid select,
+    form.register input[type=number] {
+        padding: 13px 15px;
+        font-size: 14.5px;
+        border-radius: 10px
+    }
+
+    form.register .fgrid .two {
+        gap: 0 16px
+    }
+
+    form.register .btn {
+        margin-top: 26px;
+        padding: 14px 18px;
+        font-size: 15px;
+        border-radius: 10px
+    }
+
+    .panel .form:has(form.register) .link {
+        font-size: 14.5px;
+        margin-top: 16px
+    }
+
+    @media(max-width:560px) {
+        form.register:has(>.fgrid) {
+            padding: 24px 18px 28px
+        }
+    }
 </style>
