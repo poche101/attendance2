@@ -15,5 +15,4 @@
     <button class="btn">Mark my attendance</button>
 </form>
 <a class="link" href="{{ route('portal.register') }}">Don’t have an account?</a>
-<a class="link mut" style="font-size:13px;margin-top:26px" href="{{ route('portal.login') }}">Admin sign in</a>
 @endsection
