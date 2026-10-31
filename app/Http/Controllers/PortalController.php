@@ -34,21 +34,27 @@ class PortalController extends Controller
 
     public function form()
     {
-        $churches = Church::orderBy('id')->get();
-        $configs = $churches->mapWithKeys(fn ($c) => [$c->slug => [
-            'group_label' => $c->config()['group_label'],
-            'cell_label' => $c->config()['cell_label'],
-            'groups' => $c->config()['groups'],
-        ]]);
+        $cfg = config('churches.ajah-mega');
+        $sections = collect($cfg['sections'])->map(fn ($s) => [
+            'label' => $s['label'],
+            'groups' => collect($s['groups'])->mapWithKeys(fn ($g) => [$g => $cfg['groups'][$g]])->all(),
+        ])->all();
 
-        return view('portal.register', compact('churches', 'configs'));
+        return view('portal.register', [
+            'sections' => $sections,
+            'group_label' => $cfg['group_label'],
+            'cell_label' => $cfg['cell_label'],
+        ]);
     }
 
     public function register(Request $r)
     {
-        $r->validate(['church' => 'required|exists:churches,slug']);
-        $church = Church::where('slug', $r->church)->firstOrFail();
-        $groups = $church->config()['groups'];
+        // Ajah and Ajah-Mega are one church record; the toggle only filters the groups.
+        $r->validate(['section' => 'required|in:ajah,mega']);
+        $church = Church::where('slug', 'ajah-mega')->firstOrFail();
+        $cfg = $church->config();
+        $groups = collect($cfg['sections'][$r->section]['groups'])
+            ->mapWithKeys(fn ($g) => [$g => $cfg['groups'][$g]])->all();
 
         $data = $r->validate([
             'full_name' => 'required|string|max:120',

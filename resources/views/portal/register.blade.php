@@ -13,11 +13,18 @@
         </div>
 
         <div class="sec" style="margin-top:14px">Church details</div>
-        <label>Church</label>
-        <select name="church" id="ch" required>
-            <option value="">Select your church</option>
-            @foreach($churches as $c)<option value="{{ $c->slug }}" @selected(old('church')==$c->slug)>{{ $c->name }}</option>@endforeach
-        </select>
+        <div id="tog" style="display:flex;gap:6px;background:#eef0fb;padding:4px;border-radius:12px;margin-bottom:12px">
+            @foreach($sections as $key => $sec)
+                <label style="flex:1;margin:0;cursor:pointer">
+                    <input type="radio" name="section" value="{{ $key }}" style="display:none" @checked(old('section', 'ajah') == $key) required>
+                    <span class="tg">{{ $sec['label'] }}</span>
+                </label>
+            @endforeach
+        </div>
+        <style>
+            #tog .tg{display:block;text-align:center;padding:10px 6px;border-radius:9px;font-weight:600;font-size:14px;color:#555}
+            #tog input:checked+.tg{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff}
+        </style>
         <div id="dyn"></div>
 
         <label>Children with you today (if any)</label>
@@ -29,30 +36,25 @@
 
 <script>
 (function () {
-    var CFG = @json($configs);
+    var SEC = @json($sections), GL = @json($group_label), CL = @json($cell_label);
     var old = { group: @json(old('group_name')), cell: @json(old('cell_name')) };
-    var ch = document.getElementById('ch'), box = document.getElementById('dyn');
+    var box = document.getElementById('dyn');
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+    function section() { var r = document.querySelector('input[name=section]:checked'); return r ? r.value : null; }
     function build() {
-        var c = CFG[ch.value];
-        if (!c) { box.innerHTML = ''; return; }
-        if (!c.groups) {
-            box.innerHTML = '<div class="two"><div><label>' + c.group_label + '</label><input name="group_name" value="' + esc(old.group || '') + '" required></div>' +
-                            '<div><label>' + c.cell_label + '</label><input name="cell_name" value="' + esc(old.cell || '') + '" required></div></div>';
-            return;
-        }
-        box.innerHTML = '<div class="two"><div><label>' + c.group_label + '</label><select name="group_name" id="g" required><option value="">Select group</option>' +
-            Object.keys(c.groups).map(function (g) { return '<option' + (g == old.group ? ' selected' : '') + '>' + esc(g) + '</option>'; }).join('') +
-            '</select></div><div><label>' + c.cell_label + '</label><select name="cell_name" id="c" required></select></div></div>';
-        var g = document.getElementById('g'), cc = document.getElementById('c');
+        var s = SEC[section()]; if (!s) { box.innerHTML = ''; return; }
+        box.innerHTML = '<div class="two"><div><label>' + GL + '</label><select name="group_name" id="g" required><option value="">Select group</option>' +
+            Object.keys(s.groups).map(function (g) { return '<option' + (g == old.group ? ' selected' : '') + '>' + esc(g) + '</option>'; }).join('') +
+            '</select></div><div><label>' + CL + '</label><select name="cell_name" id="c" required></select></div></div>';
+        var g = document.getElementById('g'), c = document.getElementById('c');
         function fill() {
-            cc.innerHTML = '<option value="">Select ' + c.cell_label.toLowerCase() + '</option>' +
-                (c.groups[g.value] || []).map(function (x) { return '<option' + (x == old.cell ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('');
+            c.innerHTML = '<option value="">Select ' + CL.toLowerCase() + '</option>' +
+                (s.groups[g.value] || []).map(function (x) { return '<option' + (x == old.cell ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('');
         }
         g.onchange = function () { old.cell = ''; fill(); };
         fill();
     }
-    ch.onchange = function () { old.group = ''; old.cell = ''; build(); };
+    document.querySelectorAll('input[name=section]').forEach(function (r) { r.onchange = function () { old.group = ''; old.cell = ''; build(); }; });
     build();
 })();
 </script>

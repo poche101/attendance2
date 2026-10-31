@@ -1,5 +1,5 @@
 # CE attendance — multi-church Laravel (attendance2.christembassylz5.org)
-Public: /ajah-mega · /ajah · /alasia. Admin: /{slug}/admin/login (separate admin per church).
+Public: / (portal, toggles Ajah / Ajah-Mega) · /ajah-mega. Admin: /{slug}/admin/login (separate admin per church).
 Admin menu: Overview · Members (database: search, add, edit, delete, CSV) · Attendance (present/absent by date, CSV) · Reports · Semantic Search (OpenAI).
 
 ## Install (Laravel 11/12)

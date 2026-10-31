@@ -16,6 +16,9 @@ return [
   'Mighty Men Haven'=>['Prevailed Haven','Triumphant Haven','Charis Haven','Haven: Soldier of Christ'],
   'The Prolific Group (TPG)'=>['The Empowered Cell','Virtue','The Aheadship Cell','Excellent Cell (Incubation)'],
   'Professional House of Grace Group'=>['Professionals 4','Prof 4 Phronesis','Prof 4 Pleroma','Prof 4 Zoe','Royal Dynasty Spring Cell','Royal Dynasty Cell 2'],
-  'Ezer Kenegdo Cell'=>['Ezer Kenegdo Cell']]],
- 'alasia' => ['name'=>'Christ Embassy Alasia','group_label'=>'Group','cell_label'=>'Cell','groups'=>null],
+  'Ezer Kenegdo Cell'=>['Ezer Kenegdo Cell']],
+  // Registration toggle: which groups belong to which tab
+  'sections'=>[
+   'ajah'=>['label'=>'Christ Embassy Ajah','groups'=>['Pearl Women Group','Greater Lights Group','Royal Diadem Women Group','Audacious Strategic Group','Men Fellowship Group','Mighty Men Haven','The Prolific Group (TPG)','Professional House of Grace Group','Ezer Kenegdo Cell']],
+   'mega'=>['label'=>'Christ Embassy Ajah-Mega','groups'=>['Ajah Group','Ajiwe Group','Ogombo Group','Owode-Badore Group']]]],
 ];

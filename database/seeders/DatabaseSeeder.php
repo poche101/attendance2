@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Creates the three churches (ajah-mega, ajah, alasia) and one admin per church.
+        // Creates the church (ajah-mega) and one admin per church.
         // Each admin's email and a random password are printed in the terminal.
         $this->call(ChurchSeeder::class);
     }
