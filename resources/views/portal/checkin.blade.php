@@ -1,4 +1,4 @@
-@extends('layout')@section('h','Christ Embassy Ajah')@section('sub','Mark your attendance in seconds, with one link for every member.')
+@extends('layout')@section('h', 'Christ Embassy Ajah And Christ Embassy Ajah Mega Church')@section('sub','Mark your attendance in seconds, with one link for every member.')
 @section('c')
 @php($today = now())
 <h2>Welcome, beloved</h2>

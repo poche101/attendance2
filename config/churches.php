@@ -17,8 +17,8 @@ return [
   'The Prolific Group (TPG)'=>['The Empowered Cell','Virtue','The Aheadship Cell','Excellent Cell (Incubation)'],
   'Professional House of Grace Group'=>['Professionals 4','Prof 4 Phronesis','Prof 4 Pleroma','Prof 4 Zoe','Royal Dynasty Spring Cell','Royal Dynasty Cell 2'],
   'Ezer Kenegdo Cell'=>['Ezer Kenegdo Cell']],
-  // Registration toggle: which groups belong to which tab
+  // Registration toggle: which groups belong to which tab. 'extra' = an extra option added to the end of every cell/church dropdown in that tab
   'sections'=>[
-   'ajah'=>['label'=>'Christ Embassy Ajah','groups'=>['Pearl Women Group','Greater Lights Group','Royal Diadem Women Group','Audacious Strategic Group','Men Fellowship Group','Mighty Men Haven','The Prolific Group (TPG)','Professional House of Grace Group','Ezer Kenegdo Cell']],
-   'mega'=>['label'=>'Christ Embassy Ajah-Mega','groups'=>['Ajah Group','Ajiwe Group','Ogombo Group','Owode-Badore Group']]]],
+   'ajah'=>['label'=>'Christ Embassy Ajah','extra'=>'Not in a Cell','groups'=>['Pearl Women Group','Greater Lights Group','Royal Diadem Women Group','Audacious Strategic Group','Men Fellowship Group','Mighty Men Haven','The Prolific Group (TPG)','Professional House of Grace Group','Ezer Kenegdo Cell']],
+   'mega'=>['label'=>'Christ Embassy Ajah-Mega','extra'=>'Member','groups'=>['Ajah Group','Ajiwe Group','Ogombo Group','Owode-Badore Group']]]],
 ];
