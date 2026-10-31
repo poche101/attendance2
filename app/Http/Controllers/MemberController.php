@@ -16,11 +16,17 @@ class MemberController extends Controller {
  }
  public function index(Request $r, Church $church){
   $q=trim((string)$r->query('q'));$group=$r->query('group');
+  $sections=$church->sections();
+  $section=$r->query('section'); if(!isset($sections[$section])) $section=null;
+  $sectionGroups=$section?$sections[$section]['groups']:null;
+  if($group && $sectionGroups && !in_array($group,$sectionGroups,true)) $group=null; // group belongs to the other tab
   $members=$church->members()->withCount('attendances')
+   ->when($sectionGroups,fn($x)=>$x->whereIn('group_name',$sectionGroups))
    ->when($q,fn($x)=>$x->where(fn($w)=>$w->where('full_name','like',"%$q%")->orWhere('email','like',"%$q%")->orWhere('phone','like',"%$q%")->orWhere('cell_name','like',"%$q%")))
    ->when($group,fn($x)=>$x->where('group_name',$group))->orderBy('full_name')->simplePaginate(25)->withQueryString();
-  $groups=$church->members()->select('group_name')->distinct()->orderBy('group_name')->pluck('group_name');
-  return view('admin.members',['church'=>$church,'members'=>$members,'groups'=>$groups,'q'=>$q,'group'=>$group,'total'=>$church->members()->count()]);
+  $groups=$church->members()->when($sectionGroups,fn($x)=>$x->whereIn('group_name',$sectionGroups))->select('group_name')->distinct()->orderBy('group_name')->pluck('group_name');
+  $counts=collect($sections)->map(fn($s)=>$church->members()->whereIn('group_name',$s['groups'])->count())->all();
+  return view('admin.members',['church'=>$church,'members'=>$members,'groups'=>$groups,'q'=>$q,'group'=>$group,'total'=>$church->members()->count(),'sections'=>$sections,'section'=>$section,'counts'=>$counts]);
  }
  public function create(Church $church){ return view('admin.member-form',['church'=>$church,'cfg'=>$church->config(),'m'=>null]); }
  public function store(Request $r, Church $church){ $church->members()->create($this->clean($r,$church)); return redirect()->route('admin.members',$church)->with('ok','Member added.'); }

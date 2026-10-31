@@ -23,13 +23,28 @@ class AdminController extends Controller {
   return compact('date','present','absent','total','kids','byGroup','byCell','rate','dates','church')+['saturday'=>Carbon::parse($date)->addDays(6),'current'=>$date===Church::serviceDate()];
  }
  public function dashboard(Church $church){ return view('admin.overview',$this->stats($church,Church::serviceDate())); }
- public function attendance(Request $r, Church $church){ return view('admin.attendance',$this->stats($church,$this->date($r))+['tab'=>$r->query('tab')==='absent'?'absent':'present']); }
+ public function attendance(Request $r, Church $church){
+  $s=$this->stats($church,$this->date($r));
+  $sections=$church->sections();
+  $section=$r->query('section'); if(!isset($sections[$section])) $section=null;
+  $in=fn($m,$g)=>in_array($m->group_name,$g,true);
+  // counts per tab (Ajah / Ajah-Mega) before filtering
+  $counts=collect($sections)->map(fn($sec)=>[
+   'present'=>$s['present']->filter(fn($a)=>$in($a->member,$sec['groups']))->count(),
+   'absent'=>$s['absent']->filter(fn($m)=>$in($m,$sec['groups']))->count()])->all();
+  if($section){ $g=$sections[$section]['groups'];
+   $s['present']=$s['present']->filter(fn($a)=>$in($a->member,$g))->values();
+   $s['absent']=$s['absent']->filter(fn($m)=>$in($m,$g))->values(); }
+  return view('admin.attendance',$s+['tab'=>$r->query('tab')==='absent'?'absent':'present','sections'=>$sections,'section'=>$section,'counts'=>$counts]);
+ }
  public function report(Request $r, Church $church){ return view('admin.report',$this->stats($church,$this->date($r))); }
  public function export(Request $r, Church $church, string $type){
   $s=$this->stats($church,$this->date($r));
   $rows=$type==='present'?$s['present']->map(fn($a)=>[$a->member,$a->children]):$s['absent']->map(fn($m)=>[$m,'']);
+  $sections=$church->sections(); $section=$r->query('section'); if(!isset($sections[$section])) $section=null;
+  if($section){ $g=$sections[$section]['groups']; $rows=$rows->filter(fn($row)=>in_array($row[0]->group_name,$g,true)); }
   return response()->streamDownload(function()use($rows){ $f=fopen('php://output','w'); fputcsv($f,['Name','Email','Phone','Group','Cell/Church','Children']);
-   foreach($rows as [$m,$k]) fputcsv($f,[$m->full_name,$m->email,$m->phone,$m->group_name,$m->cell_name,$k]); fclose($f); },"{$church->slug}-{$type}-{$s['date']}.csv");
+   foreach($rows as [$m,$k]) fputcsv($f,[$m->full_name,$m->email,$m->phone,$m->group_name,$m->cell_name,$k]); fclose($f); },"{$church->slug}-{$type}".($section?"-$section":"")."-{$s['date']}.csv");
  }
  public function searchForm(Church $church){ return view('admin.search',compact('church')); }
  // Semantic search via OpenAI. Only THIS church's history is ever sent.

@@ -7,5 +7,8 @@ class Church extends Model {
  public function members(){ return $this->hasMany(Member::class); }
  public function attendances(){ return $this->hasMany(Attendance::class); }
  public function config(): array { return config('churches.'.$this->slug); }
+ // Ajah / Ajah-Mega tabs (null for churches that have none)
+ public function sections(): array { return $this->config()['sections'] ?? []; }
+ public function sectionOf(?string $group): ?string { foreach($this->sections() as $k=>$s){ if(in_array($group,$s['groups'],true)) return $k; } return null; }
  public static function serviceDate(): string { return now()->startOfWeek(\Carbon\Carbon::SUNDAY)->toDateString(); }
 }
