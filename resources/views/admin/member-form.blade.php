@@ -1,0 +1,3 @@
+@extends('admin.layout')@section('title',$m?'Edit member':'Add member')@section('sub','Details are saved to this church’s database')
+@section('actions')<a class="btn sm ghost" href="{{ route('admin.members',$church) }}">← Back</a>@endsection
+@section('c')<div class="card" style="max-width:720px"><form method="post" action="{{ $m?route('admin.members.update',[$church,$m->id]):route('admin.members.store',$church) }}">@csrf @if($m)@method('PUT')@endif @include('partials.member-fields')<button class="btn" style="width:auto;padding-inline:32px">{{ $m?'Save changes':'Add member' }}</button></form></div>@endsection
