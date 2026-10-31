@@ -1,8 +1,20 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Models\Church;
-use App\Http\Controllers\{CheckinController,AdminController,MemberController};
-Route::get('/', fn()=>view('home',['churches'=>Church::orderBy('id')->get()]));
+use App\Http\Controllers\{CheckinController,AdminController,MemberController,PortalController};
+
+// ===== One public URL for everyone =====
+Route::get('/',[PortalController::class,'show'])->name('portal.checkin');
+Route::post('/checkin',[PortalController::class,'mark'])->name('portal.mark');
+Route::get('/register',[PortalController::class,'form'])->name('portal.register');
+Route::post('/register',[PortalController::class,'register'])->name('portal.register.store');
+Route::get('/admin/login',[PortalController::class,'loginForm'])->name('portal.login');
+Route::post('/admin/login',[PortalController::class,'login'])->middleware('throttle:6,1');
+Route::get('/admin',[PortalController::class,'adminHome'])->name('portal.admin');
+
+// Old Ajah links keep working
+Route::get('/ajah/{path?}', fn ($path = null) => redirect('/ajah-mega'.($path ? '/'.$path : '')))->where('path', '.*');
+
+// ===== Per-church pages (admin area is reached after signing in) =====
 Route::prefix('{church:slug}')->group(function(){
  Route::get('/',[CheckinController::class,'show'])->name('checkin');
  Route::post('/checkin',[CheckinController::class,'mark'])->name('checkin.mark');
@@ -15,8 +27,6 @@ Route::prefix('{church:slug}')->group(function(){
   Route::get('/attendance',[AdminController::class,'attendance'])->name('admin.attendance');
   Route::get('/export/{type}',[AdminController::class,'export'])->where('type','present|absent')->name('admin.export');
   Route::get('/report',[AdminController::class,'report'])->name('admin.report');
-  Route::get('/search',[AdminController::class,'searchForm'])->name('admin.search');
-  Route::post('/search',[AdminController::class,'search'])->name('admin.search.run');
   Route::get('/members',[MemberController::class,'index'])->name('admin.members');
   Route::get('/members/export',[MemberController::class,'export'])->name('admin.members.export');
   Route::get('/members/create',[MemberController::class,'create'])->name('admin.members.create');

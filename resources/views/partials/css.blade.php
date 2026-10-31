@@ -754,49 +754,6 @@
     }
 
     @media(max-width:860px) {
-        .shell {
-            grid-template-columns: 1fr
-        }
-
-        .side {
-            position: static;
-            height: auto;
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-items: center;
-            padding: 12px;
-            gap: 8px
-        }
-
-        .brand {
-            padding: 0
-        }
-
-        .nav {
-            display: flex;
-            gap: 4px;
-            overflow-x: auto;
-            flex: 1 0 100%
-        }
-
-        .nav a {
-            white-space: nowrap
-        }
-
-        .nav .lbl {
-            display: none
-        }
-
-        .foot {
-            margin: 0;
-            border: 0;
-            padding: 0
-        }
-
-        .main {
-            padding: 20px 16px 50px
-        }
-
         .two {
             grid-template-columns: 1fr
         }
@@ -806,7 +763,9 @@
 
         .side,
         .tools,
-        .btn {
+        .btn,
+        .mbar,
+        .scrim {
             display: none !important
         }
 
@@ -838,7 +797,7 @@
         }
     }
 
-    /* Register / admin member form (standard size: 342px wide) */
+    /* Standard form (342px wide) */
     form:has(>.fgrid) {
         border: 2px solid transparent;
         border-radius: 12px;
@@ -933,7 +892,7 @@
         box-shadow: none
     }
 
-    /* Login form (needs class="login" on the <form>): 452px wide */
+    /* Login form (class="login" on the <form>): 452px wide */
     form.login:has(>.fgrid) {
         border-radius: 18px;
         padding: 32px 28px 34px
@@ -974,7 +933,7 @@
         border-radius: 10px
     }
 
-    /* Check-in form (needs class="checkin" on the <form>): 572px wide */
+    /* Check-in form (class="checkin" on the <form>): 572px wide */
     .panel .form:has(form.checkin) {
         max-width: 572px !important;
         width: 100% !important
@@ -1022,6 +981,63 @@
         margin-top: 20px !important
     }
 
+    /* Register form (class="register" on the <form>): 580px wide */
+    .panel .form:has(form.register) {
+        max-width: 580px !important;
+        width: 100% !important
+    }
+
+    form.register:has(>.fgrid) {
+        border-radius: 20px !important;
+        padding: 38px 40px 40px !important
+    }
+
+    .panel .form:has(form.register) h2 {
+        font-size: 32px !important
+    }
+
+    .panel .form:has(form.register)>p {
+        font-size: 15px !important;
+        margin: 6px 0 20px !important
+    }
+
+    form.register .fgrid .sec {
+        font-size: 11.5px !important
+    }
+
+    form.register .fgrid .sec[style] {
+        margin-top: 22px !important
+    }
+
+    form.register label {
+        margin: 18px 0 7px !important;
+        font-size: 14px !important
+    }
+
+    form.register .fgrid input,
+    form.register .fgrid select,
+    form.register input[type=number] {
+        padding: 15px 16px !important;
+        font-size: 15.5px !important;
+        border-radius: 12px !important
+    }
+
+    form.register .fgrid .two {
+        gap: 0 16px !important
+    }
+
+    form.register .btn {
+        margin-top: 26px !important;
+        padding: 16px 20px !important;
+        font-size: 16px !important;
+        border-radius: 12px !important
+    }
+
+    .panel .form:has(form.register) .link {
+        font-size: 15px !important;
+        margin-top: 18px !important
+    }
+
     @media(max-width:560px) {
         form:has(>.fgrid) {
             padding: 17px 11px 19px
@@ -1034,6 +1050,33 @@
         form.checkin:has(>.fgrid) {
             padding: 28px 22px 30px !important
         }
+
+        form.register:has(>.fgrid) {
+            padding: 24px 18px 28px !important
+        }
+
+        .panel .form:has(form.checkin) h2 {
+            font-size: 28px !important
+        }
+
+        .panel .form:has(form.register) h2 {
+            font-size: 26px !important
+        }
+
+        form.checkin .fgrid input,
+        form.checkin input[type=number],
+        form.register .fgrid input,
+        form.register .fgrid select,
+        form.register input[type=number] {
+            padding: 13px 14px !important;
+            font-size: 16px !important
+        }
+
+        form.checkin .btn,
+        form.register .btn {
+            padding: 15px 18px !important;
+            font-size: 16px !important
+        }
     }
 
     @media(prefers-reduced-motion:reduce) {
@@ -1042,65 +1085,533 @@
         }
     }
 
-    /* Register form (needs class="register" on the <form>): 560px wide, taller */
-    .panel .form:has(form.register) {
-        max-width: 560px
+    /* ===== Sunday report ===== */
+    .rpt {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--sh);
+        max-width: 980px
     }
 
-    form.register:has(>.fgrid) {
-        border-radius: 18px;
-        padding: 36px 34px 40px
+    .rpt-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 32px 36px;
+        color: #fff;
+        background: radial-gradient(600px 260px at 0% 0%, #6d5df5 0, transparent 60%), radial-gradient(500px 260px at 100% 100%, #a855f7 0, transparent 55%), linear-gradient(160deg, #1e1b4b, #312e81)
     }
 
-    .panel .form:has(form.register) h2 {
-        font-size: 28px
+    .rpt-eyebrow {
+        display: block;
+        font: 600 11px Inter;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        opacity: .75;
+        margin-bottom: 8px
     }
 
-    .panel .form:has(form.register)>p {
+    .rpt-head h2 {
+        font: 700 30px/1.2 'Playfair Display', serif;
+        color: #fff
+    }
+
+    .rpt-head p {
+        margin: 6px 0 0;
+        opacity: .85;
+        font-size: 15px
+    }
+
+    .rpt-badge {
+        padding: 6px 14px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, .16);
+        font: 600 12px Inter;
+        white-space: nowrap
+    }
+
+    .rpt-badge.live:before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 0 4px rgba(52, 211, 153, .25)
+    }
+
+    .rpt-body {
+        padding: 30px 36px 8px
+    }
+
+    .rpt-lead {
+        margin: 0 0 24px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: #334155;
+        padding-left: 16px;
+        border-left: 4px solid var(--gold)
+    }
+
+    .rpt-lead b {
+        color: var(--ink)
+    }
+
+    .rpt-tiles {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-bottom: 24px
+    }
+
+    .rpt-tile {
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: #f8f9fd;
+        border: 1px solid var(--line);
+        border-top: 3px solid #c7cbe0
+    }
+
+    .rpt-tile span {
+        display: block;
+        font-size: 12px;
+        color: var(--mut);
+        margin-bottom: 4px
+    }
+
+    .rpt-tile b {
+        font: 700 28px/1.1 Inter
+    }
+
+    .rpt-tile.ok {
+        border-top-color: var(--ok)
+    }
+
+    .rpt-tile.bad {
+        border-top-color: var(--bad)
+    }
+
+    .rpt-tile.gold {
+        border-top-color: var(--gold)
+    }
+
+    .rpt-tile.pri {
+        border-top-color: var(--pri)
+    }
+
+    .rpt-cols {
+        display: grid;
+        grid-template-columns: .8fr 1.1fr 1.1fr;
+        gap: 16px;
+        margin-bottom: 22px
+    }
+
+    .rpt-box {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff
+    }
+
+    .rpt-box h3 {
         font-size: 14px;
-        margin: 4px 0 18px
+        margin-bottom: 6px
     }
 
-    form.register .fgrid .sec {
-        font-size: 11px
+    .rpt-rate {
+        text-align: center
     }
 
-    form.register .fgrid .sec[style] {
-        margin-top: 22px !important
+    .rpt-rate small {
+        color: var(--mut)
     }
 
-    form.register label {
-        margin: 16px 0 6px;
-        font-size: 13px
+    .rpt-foot {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 16px 36px;
+        border-top: 1px solid var(--line);
+        background: #fafbfe;
+        color: var(--mut);
+        font-size: 12px
     }
 
-    form.register .fgrid input,
-    form.register .fgrid select,
-    form.register input[type=number] {
-        padding: 13px 15px;
-        font-size: 14.5px;
-        border-radius: 10px
+    @media(max-width:900px) {
+        .rpt-tiles {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .rpt-cols {
+            grid-template-columns: 1fr
+        }
+
+        .rpt-head,
+        .rpt-body {
+            padding-left: 20px;
+            padding-right: 20px
+        }
+
+        .rpt-foot {
+            padding: 14px 20px
+        }
     }
 
-    form.register .fgrid .two {
-        gap: 0 16px
+    @media print {
+        * {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact
+        }
+
+        .rpt {
+            border: 0;
+            box-shadow: none;
+            max-width: none;
+            border-radius: 0
+        }
+
+        .rpt-tiles {
+            grid-template-columns: repeat(5, 1fr)
+        }
+
+        .rpt-cols {
+            grid-template-columns: .8fr 1.1fr 1.1fr
+        }
+
+        .bar-t {
+            display: none
+        }
     }
 
-    form.register .btn {
-        margin-top: 26px;
-        padding: 14px 18px;
-        font-size: 15px;
-        border-radius: 10px
+    /* ===== Responsive admin + mobile menu ===== */
+    .main {
+        min-width: 0
     }
 
-    .panel .form:has(form.register) .link {
-        font-size: 14.5px;
-        margin-top: 16px
+    .g2 {
+        grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr))
+    }
+
+    .mbar,
+    .scrim,
+    .sclose {
+        display: none
+    }
+
+    .tw {
+        -webkit-overflow-scrolling: touch
+    }
+
+    @media(max-width:1100px) and (min-width:861px) {
+        .shell {
+            grid-template-columns: 232px 1fr
+        }
+
+        .main {
+            padding: 24px 24px 56px
+        }
+    }
+
+    @media(max-width:860px) {
+        .shell {
+            display: block
+        }
+
+        .mbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            height: calc(58px + env(safe-area-inset-top));
+            padding: env(safe-area-inset-top) 14px 0;
+            background: rgba(255, 255, 255, .92);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .burger {
+            all: unset;
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            cursor: pointer;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            background: #fff;
+            flex: none
+        }
+
+        .burger:hover {
+            background: var(--bg)
+        }
+
+        .burger svg,
+        .sclose svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .mbrand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0
+        }
+
+        .mbrand i {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--pri), var(--pri2));
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-style: normal;
+            flex: none
+        }
+
+        .mbrand b {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .side {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 284px;
+            max-width: 86vw;
+            height: 100vh;
+            height: 100dvh;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            gap: 0;
+            padding: 22px 16px;
+            padding-top: max(22px, env(safe-area-inset-top));
+            overflow-y: auto;
+            transform: translateX(-104%);
+            transition: transform .3s cubic-bezier(.22, .61, .36, 1)
+        }
+
+        .brand {
+            padding: 4px 40px 22px 8px
+        }
+
+        .nav {
+            display: block;
+            overflow: visible;
+            flex: initial
+        }
+
+        .nav .lbl {
+            display: block
+        }
+
+        .nav a {
+            white-space: normal;
+            padding: 13px 12px
+        }
+
+        .foot {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--line)
+        }
+
+        .sclose {
+            all: unset;
+            display: grid;
+            place-items: center;
+            position: absolute;
+            top: 16px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #475569
+        }
+
+        .sclose:hover {
+            background: var(--bg)
+        }
+
+        body.nav-open .side {
+            transform: none;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, .3)
+        }
+
+        .scrim {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, .45);
+            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s
+        }
+
+        body.nav-open .scrim {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        body.nav-open {
+            overflow: hidden
+        }
+
+        .main {
+            padding: 20px 18px 56px
+        }
     }
 
     @media(max-width:560px) {
-        form.register:has(>.fgrid) {
-            padding: 24px 18px 28px
+        .main {
+            padding: 16px 14px 48px
+        }
+
+        .bar-t {
+            margin-bottom: 18px
+        }
+
+        .bar-t h1 {
+            font-size: 23px
+        }
+
+        .bar-t>.tools,
+        .bar-t>.chip,
+        .bar-t>.btn {
+            width: 100%
+        }
+
+        .tools {
+            width: 100%
+        }
+
+        .tools input,
+        .tools select,
+        .tools .btn,
+        .bar-t form,
+        .bar-t select {
+            width: 100%;
+            min-width: 0
+        }
+
+        .tools .sp {
+            display: none
+        }
+
+        .card {
+            padding: 16px;
+            border-radius: 14px
+        }
+
+        .stat b {
+            font-size: 24px
+        }
+
+        .grid {
+            gap: 12px
+        }
+
+        .donut {
+            width: 128px;
+            height: 128px
+        }
+
+        .donut div {
+            width: 92px;
+            height: 92px;
+            font-size: 22px
+        }
+
+        th,
+        td {
+            padding: 11px 12px
+        }
+
+        .tabs {
+            display: flex;
+            width: 100%
+        }
+
+        .tabs a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 10px
+        }
+
+        .pg {
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+            text-align: center
+        }
+
+        .rpt-head {
+            flex-direction: column
+        }
+
+        .rpt-head h2 {
+            font-size: 24px
+        }
+
+        /* Public pages (check-in, register, login) */
+        .panel {
+            padding: 22px 14px 34px
+        }
+
+        .hero {
+            padding: 22px 18px 26px
+        }
+
+        .hero h1 {
+            font-size: 24px;
+            margin: 14px 0 8px
+        }
+
+        .hero p {
+            font-size: 13px
+        }
+
+        .hero small {
+            display: none
+        }
+    }
+
+    @media(max-width:380px) {
+
+        .brand b,
+        .mbrand b {
+            font-size: 13px
+        }
+
+        .bar-t h1 {
+            font-size: 21px
         }
     }
 </style>
