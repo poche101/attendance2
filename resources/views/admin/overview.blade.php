@@ -43,6 +43,32 @@ $tiles = [
 @media(max-width:340px){.ov-stats{grid-template-columns:1fr}}
 </style>
 
+@if($sections)
+<div class="tools" style="margin-bottom:14px">
+    <a class="btn sm {{ $section ? 'ghost' : '' }}" href="{{ route('admin',$church) }}">All</a>
+    @foreach($sections as $key => $sec)
+        <a class="btn sm {{ $section === $key ? '' : 'ghost' }}" href="{{ route('admin',[$church,'section'=>$key]) }}">{{ $sec['label'] }}</a>
+    @endforeach
+</div>
+@if(!$section)
+<div class="ov-two-eq mb">
+    @foreach($compare as $key => $c)
+        <div class="card">
+            <h3>{{ $c['label'] }}</h3>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;text-align:center">
+                <div><b style="font-size:22px">{{ number_format($c['present']) }}</b><br><span class="mut">Present</span></div>
+                <div><b style="font-size:22px">{{ number_format($c['absent']) }}</b><br><span class="mut">Absent</span></div>
+                <div><b style="font-size:22px">{{ number_format($c['kids']) }}</b><br><span class="mut">Children</span></div>
+                <div><b style="font-size:22px">{{ $c['rate'] }}%</b><br><span class="mut">Rate</span></div>
+            </div>
+            <span class="mut" style="display:block;margin-top:12px">{{ $c['present'] }} of {{ $c['total'] }} members present</span>
+            <a class="btn sm ghost" style="margin-top:12px" href="{{ route('admin',[$church,'section'=>$key]) }}">View {{ $c['label'] }} →</a>
+        </div>
+    @endforeach
+</div>
+@endif
+@endif
+
 <div class="ov-stats mb">
 @foreach([['Present',$present->count(),'present'],['Absent',$absent->count(),'absent'],['Children',$kids,'children'],['Members',$total,'members']] as [$l,$v,$i])
     <div class="card stat">

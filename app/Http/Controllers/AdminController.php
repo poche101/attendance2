@@ -22,7 +22,31 @@ class AdminController extends Controller {
   $dates=$church->attendances()->select('service_date')->distinct()->orderByDesc('service_date')->pluck('service_date')->map(fn($d)=>Carbon::parse($d)->toDateString());
   return compact('date','present','absent','total','kids','byGroup','byCell','rate','dates','church')+['saturday'=>Carbon::parse($date)->addDays(6),'current'=>$date===Church::serviceDate()];
  }
- public function dashboard(Church $church){ return view('admin.overview',$this->stats($church,Church::serviceDate())); }
+ // Re-computes the overview numbers for only the members whose group is in $g
+ private function forSection(array $s, array $g): array {
+  $in=fn($m)=>in_array($m->group_name,$g,true);
+  $present=$s['present']->filter(fn($a)=>$in($a->member))->values();
+  $absent=$s['absent']->filter($in)->values();
+  $total=$present->count()+$absent->count();
+  return ['present'=>$present,'absent'=>$absent,'total'=>$total,'kids'=>$present->sum('children'),
+   'byGroup'=>$present->groupBy(fn($a)=>$a->member->group_name)->map->count()->sortDesc(),
+   'byCell'=>$present->groupBy(fn($a)=>$a->member->cell_name)->map->count()->sortDesc(),
+   'rate'=>$total?round($present->count()/$total*100):0];
+ }
+ // Ajah vs Ajah-Mega summary numbers, always from the whole church
+ private function compare(array $s, array $sections): array {
+  return collect($sections)->map(function($sec) use($s){ $x=$this->forSection($s,$sec['groups']);
+   return ['label'=>$sec['label'],'present'=>$x['present']->count(),'absent'=>$x['absent']->count(),'kids'=>$x['kids'],'total'=>$x['total'],'rate'=>$x['rate']]; })->all();
+ }
+ public function dashboard(Request $r, Church $church){
+  $s=$this->stats($church,Church::serviceDate());
+  $sections=$church->sections();
+  $section=$r->query('section'); if(!isset($sections[$section])) $section=null;
+  // side-by-side summary for Ajah vs Ajah-Mega (always from the whole church)
+  $compare=$this->compare($s,$sections);
+  if($section) $s=array_merge($s,$this->forSection($s,$sections[$section]['groups']));
+  return view('admin.overview',$s+['sections'=>$sections,'section'=>$section,'compare'=>$compare]);
+ }
  public function attendance(Request $r, Church $church){
   $s=$this->stats($church,$this->date($r));
   $sections=$church->sections();
@@ -37,7 +61,14 @@ class AdminController extends Controller {
    $s['absent']=$s['absent']->filter(fn($m)=>$in($m,$g))->values(); }
   return view('admin.attendance',$s+['tab'=>$r->query('tab')==='absent'?'absent':'present','sections'=>$sections,'section'=>$section,'counts'=>$counts]);
  }
- public function report(Request $r, Church $church){ return view('admin.report',$this->stats($church,$this->date($r))); }
+ public function report(Request $r, Church $church){
+  $s=$this->stats($church,$this->date($r));
+  $sections=$church->sections();
+  $section=$r->query('section'); if(!isset($sections[$section])) $section=null;
+  $compare=$this->compare($s,$sections);
+  if($section) $s=array_merge($s,$this->forSection($s,$sections[$section]['groups']));
+  return view('admin.report',$s+['sections'=>$sections,'section'=>$section,'compare'=>$compare]);
+ }
  public function export(Request $r, Church $church, string $type){
   $s=$this->stats($church,$this->date($r));
   $rows=$type==='present'?$s['present']->map(fn($a)=>[$a->member,$a->children]):$s['absent']->map(fn($m)=>[$m,'']);

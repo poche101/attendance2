@@ -10,12 +10,11 @@
 <body>
     <div class="auth">
         <section class="hero">
-    <div>
-        <h1>@yield('h', 'Christ Embassy Ajah And Christ Embassy Ajah Mega Church')</h1>
-        <p>@yield('sub', 'Every soul counts. Mark your attendance in seconds and let us celebrate you.')</p>
-    </div>
-    <small>Sunday Service Attendance · celz5.org</small>
-</section>
+            <div>
+                <h1>@yield('h', 'Christ Embassy Ajah And Christ Embassy Ajah Mega Church')</h1>
+                <p>@yield('sub', 'Every soul counts. Mark your attendance in seconds and let us celebrate you.')</p>
+            </div><small>Sunday Service Attendance · celz5.org</small>
+        </section>
         <section class="panel">
             <div class="form">
                 @if (session('ok'))

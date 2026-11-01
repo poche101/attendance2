@@ -1,4 +1,4 @@
-@extends('layout')@section('h','Christ Embassy Ajah')@section('sub','Create your account once. Next time, just type your email or phone.')
+@extends('layout')@section('sub','Create your account once. Next time, just type your email or phone.')
 @section('c')
 <h2>Create your account</h2>
 <p class="mut">It takes less than a minute.</p>

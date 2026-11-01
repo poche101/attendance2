@@ -1,4 +1,4 @@
-@extends('layout')@section('h', 'Christ Embassy Ajah And Christ Embassy Ajah Mega Church')@section('sub','Administrators only. You will only ever see your own church’s data.')
+@extends('layout')@section('sub','Administrators only. You will only ever see your own church’s data.')
 @section('c')
 <h2>Admin sign in</h2>
 <p class="mut">One sign-in for every church admin.</p>
