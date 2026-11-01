@@ -34,7 +34,7 @@ class PortalController extends Controller
 
     public function form()
     {
-        $cfg = config('churches.ajah-mega');
+        $cfg = (new Church)->forceFill(['slug' => 'ajah-mega'])->config(); // includes the extra options (Not in a Cell / Member)
         $sections = collect($cfg['sections'])->map(fn ($s) => [
             'label' => $s['label'],
             'groups' => collect($s['groups'])->mapWithKeys(fn ($g) => [$g => $cfg['groups'][$g]])->all(),
